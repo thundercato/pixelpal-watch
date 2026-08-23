@@ -1,0 +1,8 @@
+{
+  "name": "PixelPal Watch Rating Deck",
+  "short_name": "PixelPal Watch",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#090b14",
+  "theme_color": "#0d1020"
+}
