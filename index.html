@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#090c17">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="PixelPal Watch">
+<title>PixelPal Watch v0.3.1</title>
+<style>
+html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#090c17}iframe{border:0;width:100%;height:100%;display:block;background:#090c17}
+#build{position:fixed;right:8px;bottom:7px;z-index:99999;background:#090c17dd;color:#8e98b5;border:1px solid #2c3453;border-radius:999px;padding:5px 8px;font:11px -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;pointer-events:none}
+</style>
+</head>
+<body>
+<iframe id="app" src="Index.html?build=0.3.1" title="PixelPal Watch"></iframe>
+<div id="build">PixelPal Watch v0.3.1</div>
+<script>
+const f=document.getElementById('app');
+f.addEventListener('load',()=>{
+ try{
+  const d=f.contentDocument;
+  const css=d.createElement('style');
+  css.textContent=`
+   html,body{overflow-x:hidden!important}
+   .app{overflow-x:hidden!important;padding-bottom:54px!important}
+   .poster{height:auto!important;min-height:0!important;max-height:none!important;aspect-ratio:16/10!important;overflow:hidden!important}
+   .poster img{object-fit:contain!important;background:#090c17!important}
+   .body{position:relative!important;z-index:10!important;background:#151a2d!important}
+   .row{display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:8px!important;overflow:visible!important;width:100%!important}
+   .row button{white-space:normal!important;width:100%!important;min-width:0!important;min-height:48px!important;padding:10px 5px!important;line-height:1.15!important}
+   .grid{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+   .grid button{width:100%!important;min-height:52px!important}
+   @media(max-width:390px){.row{grid-template-columns:repeat(2,minmax(0,1fr))!important}}
+  `;
+  d.head.appendChild(css);
+  const sub=d.querySelector('header .muted'); if(sub&&!sub.textContent.includes('v0.3.1')) sub.insertAdjacentHTML('beforeend',' · v0.3.1');
+  const foot=d.createElement('div');foot.textContent='PixelPal Watch Rating Deck · v0.3.1';foot.style.cssText='text-align:center;color:#737e9d;font-size:11px;padding:18px 8px 8px';d.querySelector('.app')?.appendChild(foot);
+ }catch(e){console.error(e)}
+});
+</script>
+</body></html>
