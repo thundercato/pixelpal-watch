@@ -2,16 +2,12 @@
 
 Public app shell for the PixelPalOS Purchases research prototype.
 
-## Privacy boundary
+The deployed site contains no private purchase or banking dataset. Private Amazon and Monzo evidence is imported locally into IndexedDB on the user's device.
 
-The deployed GitHub Pages site contains **no private purchase dataset**. The user's sanitised purchase seed is imported manually into IndexedDB on their device and stays there. The private seed deliberately excludes raw Amazon Order IDs, full addresses, card numbers/last-four digits, tracking references and gift messages.
+## Historic-evidence workflow
 
-The PWA supports local product classification, locally stored product images, Asset creation, search, review queues and JSON export/import so long curation sessions can be backed up.
+Amazon purchase/product history remains the canonical itemised source. Monzo exports are supporting bank evidence. Exact amount/date matches can link bank evidence to an Amazon Purchase, but Aldi/Tesco rows are not expanded into invented items.
 
-## Install on iPhone
+Review records two separate questions: what sort of thing it is (durable, consumable, digital, not physical) and broad purpose (My purchase, House purchase, Gift, Other). Funding source may preselect a likely purpose but never proves beneficiary. Gift tagging uses a local People list.
 
-Open the deployed `/purchases/` URL in Safari, use **Share → Add to Home Screen**, then import the private PixelPal Purchases seed JSON once.
-
-## Source of truth
-
-Schema/importer research remains in the private native repository under `docs/research/purchases/`. This public repository only hosts the static PWA shell.
+Private Monzo notes, receipt links, Amazon data and curation are never committed to this repository.
