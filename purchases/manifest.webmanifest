@@ -1,0 +1,1 @@
+{"name":"PixelPal Purchases","short_name":"Purchases","start_url":"./","scope":"./","display":"standalone","background_color":"#120f1b","theme_color":"#1d1730","description":"Private local-first purchase history and asset curation for PixelPalOS.","icons":[{"src":"icon.svg","sizes":"any","type":"image/svg+xml","purpose":"any maskable"}]}
