@@ -23,3 +23,6 @@ A separate local-first Purchases research PWA is hosted at [`/purchases/`](purch
 The public repository contains only the app shell and a synthetic seed example. Private purchase history is imported by the user into IndexedDB on their device and is never committed to GitHub. The Purchases PWA supports product review/classification, purchase browsing, local product images, Asset creation and JSON backup/restore.
 
 See [`purchases/README.md`](purchases/README.md) for the privacy and install boundary.
+## Experimental gaming monitor
+
+The independent [Gaming Monitor](apps/gaming-monitor/README.md) includes a private API, persistent Discord bot collector, SQLite session history and a browser-only demo. It runs separately at `http://127.0.0.1:4310/`; GitHub Pages cannot host its backend. Watch and Purchases continue to run independently. See its guide for launch, Discord/Quest testing and Docker deployment.

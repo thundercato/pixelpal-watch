@@ -1,0 +1,20 @@
+import {test,expect} from '@playwright/test';
+test('responsive demo, routes and private mode isolation',async({page,request},info)=>{
+ const errors=[];page.on('pageerror',e=>errors.push(e.message));let apiCalls=0;page.on('request',r=>{if(r.url().includes('/api/'))apiCalls++;});
+ await page.goto('/');await expect(page.getByRole('heading',{name:'Metro Exodus'})).toBeVisible();await expect(page.locator('#notice')).toContainText('DEMO MODE');expect(apiCalls).toBe(0);
+ await page.getByRole('link',{name:'Session history',exact:true}).click();await page.selectOption('#period','week');await expect(page.locator('#history-list')).toContainText('Walkabout Mini Golf');
+ await page.getByRole('link',{name:'Quest connection test',exact:true}).click();await page.getByRole('button',{name:'Capture baseline'}).click();await expect(page.locator('#comparison')).toContainText('Baseline captured');
+ await expect(page.locator('#quest')).toContainText('Unknown');
+ await page.selectOption('#mode','real');await expect(page.locator('#notice')).not.toContainText('DEMO MODE');await expect(page.locator('#quest-data')).not.toContainText('Metro Exodus');
+ await page.locator('#token').fill('d'.repeat(64));await page.getByRole('button',{name:'Connect',exact:true}).click();await expect(page.locator('#diagnostic-data')).toContainText('disconnected');
+ const ingest=async activities=>request.post('/internal/presence',{headers:{authorization:`Bearer ${'c'.repeat(64)}`},data:{connected:true,activities}});
+ await ingest([{name:'Private Test Game',type:0,timestamps:{start:Date.now()-60000}}]);
+ await page.getByRole('link',{name:'Overview',exact:true}).click();
+ await page.locator('#token').fill('d'.repeat(64));await page.getByRole('button',{name:'Connect',exact:true}).click();
+ await expect(page.getByRole('heading',{name:'Private Test Game'})).toBeVisible();await expect(page.locator('#current')).toContainText('Unknown');
+ await ingest([]);await request.post('/internal/presence',{headers:{authorization:`Bearer ${'c'.repeat(64)}`},data:{connected:false,activities:[]}});
+ await page.getByRole('button',{name:'Lock',exact:true}).click();await expect(page.locator('#quest-data')).not.toContainText('Metro Exodus');
+ await page.selectOption('#mode','demo');await page.getByRole('link',{name:'Overview',exact:true}).click();
+ expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);expect(errors).toEqual([]);
+ await page.screenshot({path:`test-results/${info.project.name}.png`,fullPage:true});
+});
