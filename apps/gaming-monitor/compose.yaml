@@ -1,0 +1,25 @@
+services:
+  api:
+    build: .
+    restart: unless-stopped
+    environment:
+      HOST: 0.0.0.0
+      DASHBOARD_TOKEN: ${DASHBOARD_TOKEN:?Set dashboard token}
+      COLLECTOR_TOKEN: ${COLLECTOR_TOKEN:?Set collector token}
+    ports:
+      - "127.0.0.1:4310:4310"
+    volumes:
+      - gaming-data:/app/data
+  collector:
+    build: .
+    command: ["node", "src/collector.js"]
+    restart: unless-stopped
+    depends_on: [api]
+    environment:
+      COLLECTOR_API_URL: http://api:4310
+      COLLECTOR_TOKEN: ${COLLECTOR_TOKEN:?Set collector token}
+      DISCORD_BOT_TOKEN: ${DISCORD_BOT_TOKEN:?Set Discord bot token}
+      DISCORD_USER_ID: ${DISCORD_USER_ID:?Set monitored user ID}
+      DISCORD_GUILD_ID: ${DISCORD_GUILD_ID:?Set allowlisted guild ID}
+volumes:
+  gaming-data:
